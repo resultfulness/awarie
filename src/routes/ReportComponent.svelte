@@ -8,7 +8,7 @@
 
   // temporary report type
   export let report: {
-    name: string;
+    title: string;
     description: string;
     up: number;
     down: number;
@@ -45,7 +45,7 @@
   <Card style="margin: 1rem;">
     <Content>
       <h3 class="mdc-typography--headline4" class:severe={report.severe}>
-        {report.name}
+        {report.title}
       </h3>
       <p class="mdc-typography--subtitle1">{report.description}</p>
     </Content>
