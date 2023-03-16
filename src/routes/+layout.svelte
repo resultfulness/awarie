@@ -45,7 +45,7 @@
 </svelte:head>
 
 <Drawer variant="modal" bind:open={sidebarOpen}>
-  <img src="https://unsplash.it/720/480" alt="awarie header" />
+  <img src="/logo.svg" alt="awarie header" />
   <Header>
     <DrawerTitle>{$_("page_title")}</DrawerTitle>
     <Subtitle>Awarie awaryjne</Subtitle>
