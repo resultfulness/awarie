@@ -13,7 +13,9 @@
   import "./global.scss";
 
   import { page } from "$app/stores";
+  import { useDarkMode } from "$lib/stores";
   import { _ } from "svelte-i18n";
+  import { onDestroy, onMount } from "svelte";
 
   $: routes = [
     {
@@ -33,13 +35,37 @@
     },
   ];
 
+  $: active = $page.route.id;
+
   let sidebarOpen = false;
 
-  $: active = $page.route.id;
+  onMount(() => {
+    const userDarkModePreference = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+
+    if (localStorage.getItem("theme")) {
+      useDarkMode.set(localStorage.getItem("theme") === "dark");
+    } else if (userDarkModePreference) {
+      useDarkMode.set(userDarkModePreference);
+    }
+
+    const unsubsribe = useDarkMode.subscribe((val) => {
+      localStorage.setItem("theme", val ? "dark" : "light");
+    });
+
+    onDestroy(unsubsribe);
+  });
 </script>
 
 <svelte:head>
   <title>{$_("page_title")}</title>
+
+  {#if $useDarkMode}
+    <link rel="stylesheet" href="/smui-dark.css" />
+  {:else}
+    <link rel="stylesheet" href="/smui.css" />
+  {/if}
 </svelte:head>
 
 <Drawer variant="modal" bind:open={sidebarOpen}>
