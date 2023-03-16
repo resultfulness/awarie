@@ -1,73 +1,27 @@
 <script lang="ts">
   import Button, { Label } from "@smui/button";
+  import CircularProgress from "@smui/circular-progress";
   import Dialog, { Title, Content, Actions } from "@smui/dialog";
   import Fab, { Icon } from "@smui/fab";
   import ReportComponent from "./ReportComponent.svelte";
 
-  let mock_reports = [
-    {
-      name: "Lorem ipsum",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo modi similique harum accusamus reiciendis suscipit qui?",
-      up: 1,
-      down: 0,
-      outdated: 0,
-      severe: false,
-    },
-    {
-      name: "Lorem ipsum",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo modi similique harum accusamus reiciendis suscipit qui?",
-      up: 1,
-      down: 0,
-      outdated: 0,
-      severe: false,
-    },
-    {
-      name: "Wyjebało studzienkę",
-      description: "Naprawdę",
-      up: 4,
-      down: 0,
-      outdated: 0,
-      severe: true,
-    },
-    {
-      name: "Lorem ipsum",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo modi similique harum accusamus reiciendis suscipit qui?",
-      up: 1,
-      down: 0,
-      outdated: 0,
-      severe: false,
-    },
-    {
-      name: "Lorem ipsum",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo modi similique harum accusamus reiciendis suscipit qui?",
-      up: 1,
-      down: 0,
-      outdated: 0,
-      severe: false,
-    },
-    {
-      name: "Lorem ipsum",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo modi similique harum accusamus reiciendis suscipit qui?",
-      up: 1,
-      down: 0,
-      outdated: 0,
-      severe: false,
-    },
-    {
-      name: "Lorem ipsum",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo modi similique harum accusamus reiciendis suscipit qui?",
-      up: 1,
-      down: 0,
-      outdated: 0,
-      severe: false,
-    },
-  ];
+  export const ssr = false;
+
+  const proxyurl = "https://cors-anywhere.herokuapp.com/";
+
+  const fetchData = async () => {
+    const res = await fetch(proxyurl + "https://glitterworld.gq/get/reports/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        place_ids: [2, 3],
+      }),
+    });
+    const data = await res.json();
+    return data.reports;
+  };
 
   let dialogOpen = false;
 
@@ -97,9 +51,17 @@
   </Fab>
 </div>
 
-{#each mock_reports as report}
-  <ReportComponent {report} />
-{/each}
+{#await fetchData()}
+  <div class="loader">
+    <CircularProgress indeterminate style="height: 64px; width: 64px;" />
+  </div>
+{:then reports}
+  {#each reports as report}
+    <ReportComponent {report} />
+  {/each}
+{:catch error}
+  <p>{error.message}</p>
+{/await}
 
 <style>
   .fab {
@@ -108,5 +70,12 @@
     bottom: 0;
     right: 0;
     padding: 1rem;
+  }
+
+  .loader {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    place-items: center;
   }
 </style>
