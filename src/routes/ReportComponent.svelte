@@ -2,9 +2,9 @@
   import Card, { Actions, Content } from "@smui/card";
   import IconButton, { Icon } from "@smui/icon-button";
 
-  import { fade } from "svelte/transition";
-  import { reveal } from "svelte-reveal";
   import { _ } from "svelte-i18n";
+  import { reveal } from "svelte-reveal";
+  import { fade } from "svelte/transition";
 
   // temporary report type
   export let report: {

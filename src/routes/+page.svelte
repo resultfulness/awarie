@@ -1,7 +1,7 @@
 <script lang="ts">
   import Button, { Label } from "@smui/button";
   import CircularProgress from "@smui/circular-progress";
-  import Dialog, { Title, Content, Actions } from "@smui/dialog";
+  import Dialog, { Actions, Content, Title } from "@smui/dialog";
   import Fab, { Icon } from "@smui/fab";
   import ReportComponent from "./ReportComponent.svelte";
 
