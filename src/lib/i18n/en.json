@@ -3,5 +3,10 @@
   "vote_up": "Vote for this report",
   "vote_down": "Vote this report down",
   "my_reports": "My reports",
-  "about": "About"
+  "about": "About",
+  "settings": "Settings",
+  "source_code": "Source code",
+  "select_language": "Select language",
+  "save": "Save",
+  "language_change": "Change language"
 }

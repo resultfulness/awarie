@@ -3,5 +3,10 @@
   "vote_up": "Zagłosuj na awarię",
   "vote_down": "Zminusuj awarię",
   "my_reports": "Moje awarie",
-  "about": "O aplikacji"
+  "about": "O aplikacji",
+  "settings": "Ustawienia",
+  "source_code": "Kod źródłowy",
+  "select_language": "Wybierz język",
+  "save": "Zapisz",
+  "language_change": "Zmień język"
 }

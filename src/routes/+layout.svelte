@@ -1,5 +1,4 @@
 <script lang="ts">
-  import "./global.scss";
   import Drawer, {
     AppContent,
     Content,
@@ -10,13 +9,13 @@
   } from "@smui/drawer";
   import IconButton from "@smui/icon-button";
   import List, { Graphic, Item, Text } from "@smui/list";
-  import Menu from "@smui/menu";
   import TopAppBar, { Row, Section, Title } from "@smui/top-app-bar";
+  import "./global.scss";
 
-  import { _ } from "svelte-i18n";
   import { page } from "$app/stores";
+  import { _ } from "svelte-i18n";
 
-  let routes = [
+  $: routes = [
     {
       href: "/",
       name: $_("my_reports"),
@@ -27,17 +26,16 @@
       name: $_("about"),
       icon_name: "info",
     },
+    {
+      href: "/settings",
+      name: $_("settings"),
+      icon_name: "settings",
+    },
   ];
 
   let sidebarOpen = false;
 
-  // set active to currently open page on page open
-  let active = routes.filter((route) => route.href === $page.route.id)[0].name;
-
-  function setActive(value: string) {
-    sidebarOpen = false;
-    active = value;
-  }
+  $: active = $page.route.id;
 </script>
 
 <svelte:head>
@@ -45,7 +43,9 @@
 </svelte:head>
 
 <Drawer variant="modal" bind:open={sidebarOpen}>
-  <img src="/logo.svg" alt="awarie header" />
+  <a href="/" on:click={() => (sidebarOpen = false)}>
+    <img src="/logo.svg" alt="logo" class="logo" />
+  </a>
   <Header>
     <DrawerTitle>{$_("page_title")}</DrawerTitle>
     <Subtitle>Awarie awaryjne</Subtitle>
@@ -55,8 +55,8 @@
       {#each routes as { href, name, icon_name }}
         <Item
           {href}
-          on:click={() => setActive(name)}
-          activated={active === name}
+          on:click={() => (sidebarOpen = false)}
+          activated={active === href}
         >
           <Graphic class="material-symbols-outlined" aria-hidden="true">
             {icon_name}
@@ -65,7 +65,6 @@
         </Item>
       {/each}
     </List>
-    <Menu />
   </Content>
 </Drawer>
 <Scrim />
@@ -79,7 +78,23 @@
         menu
       </IconButton>
       <Title>{$_("page_title")}</Title>
+      {#if $page.route.id === "/"}
+        <IconButton
+          class="material-symbols-outlined"
+          style="margin-left: auto;"
+          on:click={() => window.location.reload()}
+        >
+          refresh
+        </IconButton>
+      {/if}
     </Section>
   </Row>
 </TopAppBar>
 <AppContent><slot /></AppContent>
+
+<style>
+  img.logo {
+    display: block;
+    padding: 1rem;
+  }
+</style>
