@@ -13,59 +13,33 @@
   import "./global.scss";
 
   import { page } from "$app/stores";
-  import { useDarkMode } from "$lib/stores";
   import { _ } from "svelte-i18n";
-  import { onDestroy, onMount } from "svelte";
 
   $: routes = [
     {
       href: "/",
-      name: $_("my_reports"),
+      name: $_("reports"),
       icon_name: "home",
     },
     {
       href: "/about",
-      name: $_("about"),
+      name: $_("about app"),
       icon_name: "info",
     },
     {
-      href: "/settings",
-      name: $_("settings"),
-      icon_name: "settings",
+      href: "/locations",
+      name: $_("locations"),
+      icon_name: "location_on",
     },
   ];
 
   $: active = $page.route.id;
 
   let sidebarOpen = false;
-
-  onMount(() => {
-    const userDarkModePreference = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-
-    if (localStorage.getItem("theme")) {
-      useDarkMode.set(localStorage.getItem("theme") === "dark");
-    } else if (userDarkModePreference) {
-      useDarkMode.set(userDarkModePreference);
-    }
-
-    const unsubsribe = useDarkMode.subscribe((val) => {
-      localStorage.setItem("theme", val ? "dark" : "light");
-    });
-
-    onDestroy(unsubsribe);
-  });
 </script>
 
 <svelte:head>
-  <title>{$_("page_title")}</title>
-
-  {#if $useDarkMode}
-    <link rel="stylesheet" href="/smui-dark.css" />
-  {:else}
-    <link rel="stylesheet" href="/smui.css" />
-  {/if}
+  <title>Awarie | {$_("page title")}</title>
 </svelte:head>
 
 <Drawer variant="modal" bind:open={sidebarOpen}>
@@ -73,8 +47,8 @@
     <img src="/logo.svg" alt="logo" class="logo" />
   </a>
   <Header>
-    <DrawerTitle>{$_("page_title")}</DrawerTitle>
-    <Subtitle>Awarie awaryjne</Subtitle>
+    <DrawerTitle>{$_("page title")}</DrawerTitle>
+    <Subtitle>{$_("app for emergency reports")}</Subtitle>
   </Header>
   <Content>
     <List>
@@ -103,7 +77,7 @@
       >
         menu
       </IconButton>
-      <Title>{$_("page_title")}</Title>
+      <Title>{$_("page title")}</Title>
       {#if $page.route.id === "/"}
         <IconButton
           class="material-symbols-outlined"
