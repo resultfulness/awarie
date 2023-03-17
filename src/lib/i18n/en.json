@@ -16,5 +16,9 @@
   "street": "street",
   "building": "building",
   "highway": "highway",
-  "highway section": "highway section"
+  "highway section": "highway section",
+  "save": "Save",
+  "you did not choose any locations yet": "You didn't choose any locations yet!",
+  "click here to choose": "Click here to choose",
+  "no locations of this type": "No locations of this type"
 }

@@ -16,5 +16,9 @@
   "street": "ulica",
   "building": "budynek",
   "highway": "autostrada",
-  "highway section": "odcinek autostrady"
+  "highway section": "odcinek autostrady",
+  "save": "Zapisz",
+  "you did not choose any locations yet": "Żadne lokalizacje nie zostały jeszcze wybrane",
+  "click here to choose": "Kliknij aby wybrać",
+  "no locations of this type": "Brak lokalizacji tego typu"
 }

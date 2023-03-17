@@ -5,6 +5,8 @@
   import ReportComponent from "./ReportComponent.svelte";
   import type { PageData } from "./$types";
 
+  import { _ } from "svelte-i18n";
+
   export let data: PageData;
 
   const reports = data.reports;
@@ -37,6 +39,15 @@
   </Fab>
 </div>
 
+{#if reports.length === 0}
+  <div class="no-reports">
+    <p style="color: #aaa">{$_("you did not choose any locations yet")}</p>
+    <Button href="/locations">
+      <Icon class="material-symbols-outlined">location_on</Icon>
+      <Label>{$_("click here to choose")}</Label>
+    </Button>
+  </div>
+{/if}
 {#each reports as report}
   <ReportComponent {report} />
 {/each}
@@ -48,5 +59,14 @@
     bottom: 0;
     right: 0;
     padding: 1rem;
+  }
+
+  .no-reports {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 </style>
