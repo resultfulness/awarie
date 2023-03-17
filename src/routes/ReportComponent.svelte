@@ -65,7 +65,7 @@
           style={"font-variation-settings: " +
             (voted === voteType ? "'FILL' 1" : "")}
           aria-label="vote {voteType}"
-          title={$_(`vote_${voteType}`)}
+          title={$_(`vote ${voteType}`)}
         >
           <Icon class="material-symbols-outlined">
             thumb_{voteType}
