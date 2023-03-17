@@ -1,27 +1,13 @@
 <script lang="ts">
   import Button, { Label } from "@smui/button";
-  import CircularProgress from "@smui/circular-progress";
   import Dialog, { Actions, Content, Title } from "@smui/dialog";
   import Fab, { Icon } from "@smui/fab";
   import ReportComponent from "./ReportComponent.svelte";
+  import type { PageData } from "./$types";
 
-  export const ssr = false;
+  export let data: PageData;
 
-  const proxyurl = "https://cors-anywhere.herokuapp.com/";
-
-  const fetchData = async () => {
-    const res = await fetch(proxyurl + "https://glitterworld.gq/get/reports/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        place_ids: [2, 3],
-      }),
-    });
-    const data = await res.json();
-    return data.reports;
-  };
+  const reports = data.reports;
 
   let dialogOpen = false;
 
@@ -31,7 +17,7 @@
 </script>
 
 <Dialog bind:open={dialogOpen}>
-  <Title>Dodaj awarię</Title>
+  <Title>Lorem, ipsum.</Title>
   <Content>
     Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, quia?
   </Content>
@@ -51,17 +37,9 @@
   </Fab>
 </div>
 
-{#await fetchData()}
-  <div class="loader">
-    <CircularProgress indeterminate style="height: 64px; width: 64px;" />
-  </div>
-{:then reports}
-  {#each reports as report}
-    <ReportComponent {report} />
-  {/each}
-{:catch error}
-  <p>{error.message}</p>
-{/await}
+{#each reports as report}
+  <ReportComponent {report} />
+{/each}
 
 <style>
   .fab {
@@ -70,12 +48,5 @@
     bottom: 0;
     right: 0;
     padding: 1rem;
-  }
-
-  .loader {
-    position: fixed;
-    inset: 0;
-    display: grid;
-    place-items: center;
   }
 </style>
