@@ -31,6 +31,11 @@
       name: $_("locations"),
       icon_name: "location_on",
     },
+    {
+      href: "/new_locations",
+      name: $_("new locations"),
+      icon_name: "location_on",
+    },
   ];
 
   $: active = $page.route.id;
