@@ -25,7 +25,7 @@
   }
 
   async function fetchPlaceInfo(placeId: number): Promise<[string, string]> {
-    const res = await fetch("https://gliterworld.gq/get/place/", {
+    const res = await fetch("https://glitterworld.gq/get/place/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
