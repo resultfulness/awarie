@@ -1,4 +1,6 @@
-# This app was moved to [svelte](https://github.com/resultfulness/awarie-app) because sveltekit too hard 😖
+~~This app was moved to [svelte](https://github.com/resultfulness/awarie-app) because sveltekit too hard 😖~~
+
+# Actually nevermind, sveltekit easy 😎
 
 # Awarie app
 
