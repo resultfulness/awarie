@@ -19,22 +19,22 @@
     {
       href: "/",
       name: $_("reports"),
-      icon_name: "home",
+      iconName: "home",
     },
     {
       href: "/about",
       name: $_("about app"),
-      icon_name: "info",
+      iconName: "info",
     },
     {
       href: "/locations",
       name: $_("locations"),
-      icon_name: "location_on",
+      iconName: "location_on",
     },
     {
-      href: "/new_locations",
-      name: $_("new locations"),
-      icon_name: "location_on",
+      href: "/me/locations",
+      name: $_("my locations"),
+      iconName: "person",
     },
   ];
 
@@ -57,14 +57,14 @@
   </Header>
   <Content>
     <List>
-      {#each routes as { href, name, icon_name }}
+      {#each routes as { href, name, iconName }}
         <Item
           {href}
           on:click={() => (sidebarOpen = false)}
           activated={active === href}
         >
           <Graphic class="material-symbols-outlined" aria-hidden="true">
-            {icon_name}
+            {iconName}
           </Graphic>
           <Text>{name}</Text>
         </Item>
