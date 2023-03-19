@@ -1,7 +1,3 @@
-~~This app was moved to [svelte](https://github.com/resultfulness/awarie-app) because sveltekit too hard 😖~~
-
-# Actually nevermind, sveltekit easy 😎
-
 # Awarie app
 
 awarie app with [sveltekit](https://github.com/sveltejs/kit) and [SMUI](https://github.com/hperrin/svelte-material-ui)
