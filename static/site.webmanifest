@@ -1,6 +1,7 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "Awarie",
+    "short_name": "Awarie",
+    "description": "Emergency reports",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
@@ -15,5 +16,7 @@
     ],
     "theme_color": "#F44336",
     "background_color": "#ffffff",
-    "display": "standalone"
+    "display": "fullscreen",
+    "start_url": "/",
+    "orientation": "portrait-primary"
 }
