@@ -1,56 +1,61 @@
 <script lang="ts">
-  import Button, { Label } from "@smui/button";
-  import Dialog, { Actions, Content, Title } from "@smui/dialog";
-  import Fab, { Icon } from "@smui/fab";
-  import ReportComponent from "./ReportComponent.svelte";
-  import type { PageData } from "./$types";
+  import Fab, { Icon, Label } from "@smui/fab";
 
+  import Loading from "$lib/Loading.svelte";
+  import ToLocations from "$lib/ToLocations.svelte";
+  import type { Report } from "$lib/types/Report";
+  import ReportComponent from "./ReportComponent.svelte";
+
+  import { onMount } from "svelte";
   import { _ } from "svelte-i18n";
 
-  export let data: PageData;
+  let reports: Report[] = [];
 
-  const reports = data.reports;
+  let loading = true;
 
-  let dialogOpen = false;
+  onMount(async () => {
+    const userLocationIDs = JSON.parse(
+      localStorage.getItem("userLocationIDs") as string
+    );
+    if (userLocationIDs) {
+      const res = await fetch("https://glitterworld.gq/get/reports/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          place_ids: userLocationIDs,
+        }),
+      });
+      const items = await res.json();
+      reports = items.reports;
+    }
 
-  function handleAdd() {
-    dialogOpen = true;
+    loading = false;
+  });
+
+  function handleNew() {
+    throw new Error("not implemented");
   }
 </script>
 
-<Dialog bind:open={dialogOpen}>
-  <Title>Lorem, ipsum.</Title>
-  <Content>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, quia?
-  </Content>
-  <Actions>
-    <Button on:click={() => void 0}>
-      <Label>No</Label>
-    </Button>
-    <Button on:click={() => void 0}>
-      <Label>Yes</Label>
-    </Button>
-  </Actions>
-</Dialog>
-
 <div class="fab">
-  <Fab color="primary" on:click={handleAdd}>
+  <Fab color="primary" extended on:click={handleNew}>
     <Icon class="material-symbols-outlined">add</Icon>
+    <Label>{$_("new")}</Label>
   </Fab>
 </div>
 
-{#if reports.length === 0}
-  <div class="no-reports">
-    <p style="color: #aaa">{$_("you did not choose any locations yet")}</p>
-    <Button href="/locations">
-      <Icon class="material-symbols-outlined">location_on</Icon>
-      <Label>{$_("click here to choose")}</Label>
-    </Button>
-  </div>
+{#if loading}
+  <Loading />
+{:else}
+  {#if reports.length === 0}
+    <ToLocations />
+  {/if}
+  {#each reports as report}
+    <ReportComponent {report} />
+  {/each}
 {/if}
-{#each reports as report}
-  <ReportComponent {report} />
-{/each}
 
 <style>
   .fab {
@@ -59,14 +64,5 @@
     bottom: 0;
     right: 0;
     padding: 1rem;
-  }
-
-  .no-reports {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
   }
 </style>

@@ -2,54 +2,52 @@
   import Card, { Actions, Content } from "@smui/card";
   import IconButton, { Icon } from "@smui/icon-button";
 
+  import type { Report } from "$lib/types/Report";
+
   import { _ } from "svelte-i18n";
   import { reveal } from "svelte-reveal";
   import { fade } from "svelte/transition";
 
-  // temporary report type
-  export let report: {
-    title: string;
-    description: string;
-    up: number;
-    down: number;
-    outdated: number;
-    severe: boolean;
-  };
+  export let report: Report;
 
-  $: voteRatio = 100 * (report.up / (report.up + report.down));
+  //
+  // disabled until server voting implemented
+  //
 
-  enum VoteType {
-    UP = "up",
-    DOWN = "down",
-  }
+  // $: voteRatio = 100 * (report.up / (report.up + report.down));
 
-  let voted: VoteType | null = null;
+  // enum VoteType {
+  //   UP = "up",
+  //   DOWN = "down",
+  // }
 
-  function handleVote(voteType: VoteType) {
-    const unvoteType = voteType === VoteType.UP ? VoteType.DOWN : VoteType.UP;
+  // let voted: VoteType | null = null;
 
-    if (voted !== voteType) {
-      report[voteType] += 1;
-      if (voted === unvoteType) {
-        report[unvoteType] -= 1;
-      }
-      voted = voteType;
-    } else {
-      report[voteType] -= 1;
-      voted = null;
-    }
-  }
+  // function handleVote(voteType: VoteType) {
+  //   const unvoteType = voteType === VoteType.UP ? VoteType.DOWN : VoteType.UP;
+
+  //   if (voted !== voteType) {
+  //     report[voteType] += 1;
+  //     if (voted === unvoteType) {
+  //       report[unvoteType] -= 1;
+  //     }
+  //     voted = voteType;
+  //   } else {
+  //     report[voteType] -= 1;
+  //     voted = null;
+  //   }
+  // }
 </script>
 
 <div use:reveal>
   <Card style="margin: 1rem;">
     <Content>
-      <h3 class="mdc-typography--headline4" class:severe={report.severe}>
+      <h3 class="mdc-typography--headline4">
         {report.title}
       </h3>
       <p class="mdc-typography--subtitle1">{report.description}</p>
     </Content>
-    <Actions style="margin-left: auto;">
+    <!-- <Actions style="margin-left: auto;">
       {#if voted}
         <small
           transition:fade
@@ -72,7 +70,7 @@
           </Icon>
         </IconButton>
       {/each}
-    </Actions>
+    </Actions> -->
   </Card>
 </div>
 
@@ -81,17 +79,5 @@
 
   h3 {
     border-bottom: 2px solid $grey-800;
-  }
-
-  .severe {
-    color: $red-500;
-  }
-
-  .positive {
-    color: $green-200;
-  }
-
-  .negative {
-    color: $red-200;
   }
 </style>
