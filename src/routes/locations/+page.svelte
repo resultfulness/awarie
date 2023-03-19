@@ -32,7 +32,7 @@
 
   let isDataLoading = true;
 
-  async function fetchLocationsUnderCurrentlySelected() {
+  async function fetchLocationsUnderCurrentlySelected(): Promise<Place[]> {
     isDataLoading = true;
     const res = await fetch("https://glitterworld.gq/get/all-places/", {
       method: "POST",
