@@ -7,17 +7,37 @@
   import ToLocations from "$lib/ToLocations.svelte";
 
   import { _ } from "svelte-i18n";
+  import { onMount } from "svelte";
 
   let open = false;
   let toRemove: number;
+  let myPlaceIDs: number[] = [];
 
-  let myPlaces: number[] = (
-    JSON.parse(localStorage.getItem("userLocationIDs") as string) || []
-  ).sort();
+  onMount(() => {
+    myPlaceIDs = (
+      JSON.parse(localStorage.getItem("userLocationIDs") as string) || []
+    ).sort();
+  });
 
   function handleRemove() {
-    myPlaces = myPlaces.filter((p) => p !== toRemove);
-    localStorage.setItem("userLocationIDs", JSON.stringify(myPlaces));
+    myPlaceIDs = myPlaceIDs.filter((p) => p !== toRemove);
+    localStorage.setItem("userLocationIDs", JSON.stringify(myPlaceIDs));
+  }
+
+  async function fetchPlaceInfo(placeId: number): Promise<[string, string]> {
+    const res = await fetch("https://gliterworld.gq/get/place/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        place_id: placeId,
+      }),
+    });
+
+    const item = await res.json();
+
+    return [item.place.name, item.place.type];
   }
 </script>
 
@@ -26,18 +46,30 @@
 </header>
 <hr />
 <List>
-  {#if myPlaces.length === 0}
+  {#if myPlaceIDs.length === 0}
     <ToLocations />
   {:else}
-    {#each myPlaces as place}
+    {#each myPlaceIDs as placeId}
       <Item
         style="display: flex; justify-content: space-between; align-items: center;"
         on:click={() => {
           open = true;
-          toRemove = place;
+          toRemove = placeId;
         }}
       >
-        <ListLabel style="padding-left: 1rem;">{place}</ListLabel>
+        <ListLabel style="padding-left: 1rem;">
+          {#await fetchPlaceInfo(placeId)}
+            <p class="triple-dot-loading">
+              {$_("fetching location of")} id
+              {placeId}<span>...</span>
+            </p>
+          {:then place}
+            {$_(place[1]).toUpperCase()}: {place[0]}
+          {:catch}
+            {$_("could not fetch info")}, id:
+            {placeId}
+          {/await}
+        </ListLabel>
         <IconButton class="material-symbols-outlined" style="color: red;">
           close
         </IconButton>
@@ -68,5 +100,17 @@
 <style>
   header {
     padding: 2rem;
+  }
+
+  .triple-dot-loading {
+    font-family: monospace;
+    clip-path: inset(0 3ch 0 0);
+    animation: tripledotloading 1s steps(4) infinite;
+  }
+
+  @keyframes tripledotloading {
+    to {
+      clip-path: inset(0 -1ch 0 0);
+    }
   }
 </style>

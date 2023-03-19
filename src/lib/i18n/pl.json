@@ -39,5 +39,7 @@
   "new": "nowa",
   "back": "wróć",
   "show reports": "Pokaż awarie",
-  "you are about to remove": "Zamierzasz usunąć"
+  "you are about to remove": "Zamierzasz usunąć",
+  "could not fetch info": "Nie udało się pobrać informacji",
+  "fetching location of": "Ładowanie lokacji z"
 }

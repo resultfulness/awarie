@@ -38,5 +38,7 @@
   "a new location": "a new location",
   "new": "new",
   "back": "back",
-  "you are about to remove": "You are about to remove"
+  "you are about to remove": "You are about to remove",
+  "could not fetch info": "Could not fetch info",
+  "fetching location of": "Fetching location of"
 }
