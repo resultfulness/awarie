@@ -52,9 +52,11 @@
   {#if reports.length === 0}
     <ToLocations />
   {/if}
-  {#each reports as report}
-    <ReportComponent {report} />
-  {/each}
+  <div class="grid">
+    {#each reports as report}
+      <ReportComponent {report} />
+    {/each}
+  </div>
 {/if}
 
 <style>
@@ -64,5 +66,20 @@
     bottom: 0;
     right: 0;
     padding: 1rem;
+  }
+
+  .grid {
+    max-width: 960px;
+    margin: auto;
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 960px) {
+    .grid {
+      grid-template-columns: 1fr 1fr;
+    }
   }
 </style>

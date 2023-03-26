@@ -40,7 +40,7 @@
 </script>
 
 <div use:reveal>
-  <Card style="margin: 1rem;">
+  <Card>
     <Content>
       <h3 class="mdc-typography--headline4">
         {report.title}
