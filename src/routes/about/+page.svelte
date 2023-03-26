@@ -117,9 +117,9 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 1rem;
-    background-color: color.adjust($grey-900, $blue: +4);
 
     > a {
+      background-color: lighten(color.adjust($grey-900, $blue: +4), 4);
       display: flex;
       justify-content: space-between;
       padding: 0.5rem 2rem;
@@ -134,7 +134,7 @@
 
       &:hover,
       &:focus {
-        background-color: $grey-800;
+        background-color: lighten(color.adjust($grey-900, $blue: +4), 8);
       }
     }
 
@@ -142,14 +142,14 @@
       grid-template-columns: 1fr 1fr;
     }
 
-    @media (min-width: 1500px) {
-      grid-template-columns: repeat(4, 1fr);
+    @media (min-width: 960px) {
+      max-width: 960px;
+      margin-inline: auto;
     }
 
     @media (prefers-color-scheme: light) {
-      background-color: darken(white, 4);
-
       > a {
+        background-color: darken(white, 4);
         color: black;
         border-bottom: 1px solid black;
 
