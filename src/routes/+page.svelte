@@ -34,17 +34,17 @@
     loading = false;
   });
 
-  function handleNew() {
-    throw new Error("not implemented");
-  }
+  // function handleNew() {
+  //   throw new Error("not implemented");
+  // }
 </script>
 
-<div class="fab">
+<!-- <div class="fab">
   <Fab color="primary" extended on:click={handleNew}>
     <Icon class="material-symbols-outlined">add</Icon>
     <Label>{$_("new")}</Label>
   </Fab>
-</div>
+</div> -->
 
 {#if loading}
   <Loading />
