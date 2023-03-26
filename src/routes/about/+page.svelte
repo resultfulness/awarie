@@ -145,5 +145,23 @@
     @media (min-width: 1500px) {
       grid-template-columns: repeat(4, 1fr);
     }
+
+    @media (prefers-color-scheme: light) {
+      background-color: darken(white, 4);
+
+      > a {
+        color: black;
+        border-bottom: 1px solid black;
+
+        svg {
+          fill: black;
+        }
+
+        &:hover,
+        &:focus {
+          background-color: darken(white, 8);
+        }
+      }
+    }
   }
 </style>
