@@ -82,7 +82,7 @@
     if (currentUserLocationIDs === null) {
       localStorage.setItem(
         "userLocationIDs",
-        JSON.stringify(previouslySelectedLocationChain.map((place) => place.id))
+        JSON.stringify(currentlySelectedLocation.id)
       );
     } else {
       localStorage.setItem(
@@ -90,7 +90,7 @@
         JSON.stringify([
           ...new Set([
             ...JSON.parse(currentUserLocationIDs),
-            ...previouslySelectedLocationChain.map((place) => place.id),
+            currentlySelectedLocation.id,
           ]),
         ])
       );
